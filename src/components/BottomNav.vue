@@ -32,17 +32,18 @@
 export default {
   data () {
     return {
-      path: "/calendar",
+      path: "/",
       e2: 0
     }
   },
   computed: {
     color () {
       switch (this.path) {
-        case "/calendar" : return 'blue-grey'
-        case "/notice" : return 'teal'
-        case "/review" : return 'brown'
-        case "/chat" : return 'indigo'
+        case "/" : return 'blue darken-4'
+        case "/calendar" : return 'light-blue darken-4'
+        case "/notice" : return 'light-green darken-4'
+        case "/review" : return 'blue-grey darken-4'
+        case "/chat" : return 'indigo darken-4'
       }
     }
   },
@@ -50,6 +51,7 @@ export default {
     this.$nextTick(()=>{
       window.addEventListener('hashchange', ()=>{
         this.path = window.location.hash.replace("#", '');
+        if (this.path == "/") {}
       });
     });
   }

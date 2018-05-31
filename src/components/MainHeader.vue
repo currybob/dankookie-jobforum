@@ -2,13 +2,18 @@
   <v-toolbar color="dankook_blue" dark fixed app>
     <v-toolbar-side-icon @click.stop="toggleSidebar"></v-toolbar-side-icon>
     <v-toolbar-title>
-      <h1 class="nav_title">단쿠키 잡포럼</h1>
+      <h1 class="nav_title">
+        <router-link to="/">쿠키잡포럼</router-link>
+      </h1>
     </v-toolbar-title>
     <img src="../assets/logo.png" alt="단쿠키 로고" class="nav_logo">
     <v-spacer></v-spacer>
-    <v-btn icon>
-      <v-icon>person</v-icon>
-    </v-btn>
+    <v-badge right color="red" overlap>
+      <v-icon slot="badge" dark small>notifications</v-icon>
+      <v-icon large color="grey lighten-1">
+        person
+      </v-icon>
+    </v-badge>
     <v-btn icon @click="toggleSetting()">
       <v-icon>more_horiz</v-icon>
     </v-btn>
@@ -35,6 +40,9 @@ export default {
   .nav_title {
     font-size: 20px;
     font-weight: 500;
+    a {
+      color: #ffffff;
+    }
   }
 }
 
