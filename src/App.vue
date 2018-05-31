@@ -1,13 +1,16 @@
 <template>
-  <v-app id="">
+  <v-app>
     <v-navigation-drawer :mini-variant.sync="mini" v-model="drawer" fixed app>
       <MainNavbar></MainNavbar>
     </v-navigation-drawer>
-    <MainHeader @toggleSidebar="toggleSidebar"></MainHeader>
+    <MainHeader @toggleSidebar="toggleSidebar" @toggleSetting="toggleSetting"></MainHeader>
     <v-content>
       <router-view></router-view>
     </v-content>
     <BottomNav></BottomNav>
+    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+      <SettingDialog @toggleSetting="toggleSetting"></SettingDialog>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -15,10 +18,13 @@
 import MainNavbar from './components/MainNavbar'
 import MainHeader from './components/MainHeader'
 import BottomNav from './components/BottomNav'
+import SettingDialog from './components/SettingDialog'
+
 export default {
   data: () => ({
     drawer: null,
     mini: true,
+    dialog: false
   }),
   props: {
     source: String
@@ -26,12 +32,16 @@ export default {
   methods: {
     toggleSidebar(){
       this.drawer = !this.drawer;
+    },
+    toggleSetting(){
+      this.dialog = !this.dialog;
     }
   },
   components: {
     MainNavbar,
     MainHeader,
-    BottomNav
+    BottomNav,
+    SettingDialog
   }
 }
 </script>

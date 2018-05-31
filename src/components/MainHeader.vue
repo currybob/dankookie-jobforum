@@ -6,9 +6,12 @@
     </v-toolbar-title>
     <img src="../assets/logo.png" alt="단쿠키 로고" class="nav_logo">
     <v-spacer></v-spacer>
-    <v-toolbar-items>
-      
-    </v-toolbar-items>
+    <v-btn icon>
+      <v-icon>person</v-icon>
+    </v-btn>
+    <v-btn icon @click="toggleSetting()">
+      <v-icon>more_horiz</v-icon>
+    </v-btn>
   </v-toolbar>
 </template>
 
@@ -17,6 +20,9 @@ export default {
   methods: {
     toggleSidebar(){
       this.$emit('toggleSidebar')
+    },
+    toggleSetting(){
+      this.$emit('toggleSetting')
     }
   }
 }

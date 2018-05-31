@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueTuicalendar from '@lkmadushan/vue-tuicalendar'
+import Vuefire from 'vuefire'
 
 import {
   Vuetify,
@@ -11,11 +12,18 @@ import {
   VNavigationDrawer,
   VFooter,
   VList,
+  VSelect,
+  VChip,
   VBtn,
   VIcon,
   VGrid,
   VToolbar,
   VBottomNav,
+  VDivider,
+  VDialog,
+  VSubheader,
+  VCard,
+  VCheckbox,
   transitions
 } from 'vuetify'
 
@@ -29,11 +37,18 @@ Vue.use(Vuetify, {
     VNavigationDrawer,
     VFooter,
     VList,
+    VSelect,
+    VChip,
     VBtn,
     VIcon,
     VGrid,
     VToolbar,
     VBottomNav,
+    VDivider,
+    VDialog,
+    VSubheader,
+    VCard,
+    VCheckbox,
     transitions
   },
   theme: {
@@ -47,7 +62,9 @@ Vue.use(Vuetify, {
     dankook_blue: '#00529C'
   }
 });
+
 Vue.use(VueTuicalendar);
+Vue.use(Vuefire);
 
 Vue.config.productionTip = false
 
