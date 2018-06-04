@@ -12,6 +12,12 @@
         <v-icon>list_alt</v-icon> 
       </v-btn>
     </router-link>
+    <router-link tag="div" to="/program" class="bottom_nav_list">
+      <v-btn dark value="/chat">
+        <span class="btn_title">프로그램</span>
+        <v-icon>list</v-icon>
+      </v-btn>
+    </router-link>
     <router-link tag="div" to="/review" class="bottom_nav_list">
       <v-btn dark value="/review">
         <span class="btn_title">취업수기</span>

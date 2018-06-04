@@ -4,7 +4,7 @@
       <v-btn icon dark @click.native="toggleSetting()">
         <v-icon>close</v-icon>
       </v-btn>
-      <v-toolbar-title>설정</v-toolbar-title>
+      <v-toolbar-title class="toolbar_title">설정</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn dark flat icon @click.native="toggleSetting()">
@@ -68,6 +68,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.toolbar_title {
+  font-size: 18px;
+  font-weight: 400;
+  position: relative;
+  top: 1px;
+}
 </style>

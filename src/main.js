@@ -1,10 +1,10 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueTuicalendar from '@lkmadushan/vue-tuicalendar'
-import Vuefire from 'vuefire'
+import VueAxios from 'vue-axios';
+import VueTuicalendar from '@lkmadushan/vue-tuicalendar';
+import Vuefire from 'vuefire';
+import axios from './customAxios.js';
 
 import {
   Vuetify,
@@ -25,6 +25,7 @@ import {
   VSubheader,
   VCard,
   VCheckbox,
+  VProgressCircular,
   transitions
 } from 'vuetify'
 
@@ -51,6 +52,7 @@ Vue.use(Vuetify, {
     VSubheader,
     VCard,
     VCheckbox,
+    VProgressCircular,
     transitions
   },
   theme: {
@@ -65,13 +67,14 @@ Vue.use(Vuetify, {
   }
 });
 
+Vue.use(VueAxios, axios);
 Vue.use(VueTuicalendar);
 Vue.use(Vuefire);
 
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+const vm = new Vue({
   el: '#app',
   router,
   components: { App },

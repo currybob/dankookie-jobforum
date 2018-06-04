@@ -1,5 +1,6 @@
 <template>
   <div class="calendar_wrap">
+    <v-progress-circular :size="50" :width="7" indeterminate color="dankook_blue" v-if="!loaded" class="progress_bar"></v-progress-circular>
     <vue-tuicalendar ref="calendar" :schedules="schedules" :options="options" class="calendar"></vue-tuicalendar>
     <div class="btn_wrap">
       <v-btn fab dark color="error">
@@ -13,8 +14,10 @@
 </template>
 
 <script>
+
+var parseString = require('xml2js').parseString;
 export default {
-data() {
+  data() {
     return {
       options: {
         defaultView: 'month',
@@ -26,38 +29,43 @@ data() {
           narrowWeekend: false
         }
       },
-      schedules: [
-        {
-          id: '1',
-          calendarId: '1',
-          title: 'A기업 공채 시작',
-          category: 'time',
-          dueDateClass: '',
-          start: '2018-05-20T22:30:00+09:00',
-          end: '2018-05-21T02:30:00+09:00'
-        },
-        {
-          id: "2",
-          calendarId: "1",
-          title: "B기업 공채 시작",
-          category: "time",
-          dueDateClass: "",
-          start: "2018-05-23T17:30:00+09:00",
-          end: "2018-05-24T17:31:00+09:00",
-          isReadOnly: true
-        }
-      ]
+      schedules: [],
+      bgColors: ['#eeeeee'],
+      loaded: false
     }
   },
   methods: {
     mounted() {
       // this.$refs.calendar.fireMethod('clear');
-      // this.$refs.calendar.fireMethod('getElement');
-      
+      // this.$refs.calendar.fireMethod('getElement'); 
       // this.$refs.calendar.registerEvent('beforeDeleteSchedule', (event) => {
         
       // })
     }
+  },
+  created(){
+    const site = 'http://api.saramin.co.kr/job-search?stock=kospi+kosdaq&sr=directhire&job_type=4&fields=posting-date+expiration-date+keyword-code&start=1&count=30';
+    const yql = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from xml where url="' + site + '"') + '&format=xml&callback=?';
+
+    $.getJSON(yql, (data) => {
+      let xml = data.results[0]
+      parseString(xml, (err, result) => {
+        let parsedData = result['job-search']['jobs'][0]['job'];
+        for (let i in parsedData) {
+          let copyObj = {
+            id: parsedData[i]['id'][0],
+            category: 'time',
+            calendarId: 1,
+            title: parsedData[i]['company'][0]['name'][0]['_'],
+            start: parsedData[i]['posting-date'][0],
+            end: parsedData[i]['expiration-date'][0],
+            bgColor: this.bgColors[Math.floor(Math.random() * this.bgColors.length)]
+          };
+          this.schedules.push(copyObj);
+          this.loaded = true;
+        }
+      });
+    });
   }
 }
 </script>
@@ -78,4 +86,13 @@ data() {
     border-top: 1px solid #eee;
   }
 }
+
+.progress_bar {
+  position: absolute;
+  top: calc(50% - 25px);
+  left: calc(50% - 25px);
+  z-index: 9999;
+}
+
+
 </style>

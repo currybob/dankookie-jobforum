@@ -4,6 +4,7 @@ import Main from '@/components/Main'
 import Login from '@/components/Login'
 import Calendar from '@/components/Calendar'
 import Notice from '@/components/Notice'
+import Program from '@/components/Program'
 import Review from '@/components/Review'
 import Chat from '@/components/Chat'
 
@@ -25,6 +26,11 @@ export default new Router({
       path: '/notice',
       name: 'Notice',
       component: Notice
+    },
+    {
+      path: '/program',
+      name: 'Program',
+      component: Program
     },
     {
       path: '/review',

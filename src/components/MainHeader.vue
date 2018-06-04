@@ -38,8 +38,11 @@ export default {
   margin-left: 0;
 
   .nav_title {
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 400;
+    position: relative;
+    top: 1px;
+    
     a {
       color: #ffffff;
     }
