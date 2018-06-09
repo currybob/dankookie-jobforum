@@ -1,6 +1,8 @@
-import Vue from 'vue'
-import App from './App'
-import router from './router'
+import 'babel-polyfill';
+// import 'es6-promise/auto';
+import Vue from 'vue';
+import App from './App';
+import router from './router';
 import VueAxios from 'vue-axios';
 import VueTuicalendar from '@lkmadushan/vue-tuicalendar';
 import Vuefire from 'vuefire';

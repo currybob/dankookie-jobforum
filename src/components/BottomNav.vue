@@ -13,9 +13,9 @@
       </v-btn>
     </router-link>
     <router-link tag="div" to="/program" class="bottom_nav_list">
-      <v-btn dark value="/chat">
+      <v-btn dark value="/program">
         <span class="btn_title">프로그램</span>
-        <v-icon>list</v-icon>
+        <v-icon>school</v-icon>
       </v-btn>
     </router-link>
     <router-link tag="div" to="/review" class="bottom_nav_list">
@@ -48,8 +48,9 @@ export default {
         case "/" : return 'blue darken-4'
         case "/calendar" : return 'light-blue darken-4'
         case "/notice" : return 'light-green darken-4'
+        case "/program" : return 'cyan darken-4'
         case "/review" : return 'blue-grey darken-4'
-        case "/chat" : return 'indigo darken-4'
+        case "/chat" : return 'light-blue darken-4'
       }
     }
   },
