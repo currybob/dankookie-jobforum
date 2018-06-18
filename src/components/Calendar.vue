@@ -14,8 +14,9 @@
 </template>
 
 <script>
-
 var parseString = require('xml2js').parseString;
+import eventBus from '../eventBus.js';
+
 export default {
   data() {
     return {
@@ -29,12 +30,42 @@ export default {
           narrowWeekend: false
         }
       },
+      keyword: '',
       schedules: [],
       bgColors: ['#eeeeee'],
       loaded: false
     }
   },
   methods: {
+    addKeyword(keyword){
+      this.keyword = keyword.join('+');
+      this.fetchSchedule();
+    },
+    fetchSchedule(){
+      this.schedules = [];
+      let site = `http://api.saramin.co.kr/job-search?keywords=${this.keyword}&fields=posting-date+expiration-date&sort=pd&start=1&count=30`
+      const yql = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from xml where url="' + site + '"') + '&format=xml&callback=?';
+
+      $.getJSON(yql, (data) => {
+        let xml = data.results[0]
+        parseString(xml, (err, result) => {
+          let parsedData = result['job-search']['jobs'][0]['job'];
+          for (let i in parsedData) {
+            let copyObj = {
+              id: parsedData[i]['id'][0],
+              category: 'time',
+              calendarId: 1,
+              title: parsedData[i]['company'][0]['name'][0]['_'],
+              start: parsedData[i]['posting-date'][0],
+              end: parsedData[i]['expiration-date'][0],
+              bgColor: this.bgColors[Math.floor(Math.random() * this.bgColors.length)]
+            };
+            this.schedules.push(copyObj);
+            this.loaded = true;
+          }
+        });
+      });
+    },
     mounted() {
       // this.$refs.calendar.fireMethod('clear');
       // this.$refs.calendar.fireMethod('getElement'); 
@@ -44,28 +75,10 @@ export default {
     }
   },
   created(){
-    const site = 'http://api.saramin.co.kr/job-search?stock=kospi+kosdaq&sr=directhire&job_type=4&fields=posting-date+expiration-date+keyword-code&start=1&count=30';
-    const yql = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from xml where url="' + site + '"') + '&format=xml&callback=?';
-
-    $.getJSON(yql, (data) => {
-      let xml = data.results[0]
-      parseString(xml, (err, result) => {
-        let parsedData = result['job-search']['jobs'][0]['job'];
-        for (let i in parsedData) {
-          let copyObj = {
-            id: parsedData[i]['id'][0],
-            category: 'time',
-            calendarId: 1,
-            title: parsedData[i]['company'][0]['name'][0]['_'],
-            start: parsedData[i]['posting-date'][0],
-            end: parsedData[i]['expiration-date'][0],
-            bgColor: this.bgColors[Math.floor(Math.random() * this.bgColors.length)]
-          };
-          this.schedules.push(copyObj);
-          this.loaded = true;
-        }
-      });
+    eventBus.$on('addKeyword', keyword=>{
+      this.addKeyword(keyword);
     });
+    this.fetchSchedule();
   }
 }
 </script>

@@ -36,7 +36,7 @@
     </v-list>
     <v-list three-line subheader>
       <v-subheader>관심태그 설정</v-subheader>
-      <v-select v-model="chips" label="관심 태그를 입력해주세요" chips tags solo prepend-icon="filter_list" append-icon="" clearable>
+      <v-select v-model="chips" @keyup.enter="addKeyword" label="관심 태그를 입력해주세요" chips tags solo prepend-icon="filter_list" append-icon="" clearable>
         <template slot="selection" slot-scope="data">
           <v-chip :selected="data.selected" close @input="removeTag(data.item)">
             <strong>{{ data.item }}</strong>
@@ -48,12 +48,13 @@
 </template>
 
 <script>
+import eventBus from '../eventBus'
 export default {
   data(){
     return {
       notifications: false,
       sound: true,
-      chips: ['개발', '금융', '중견기업']
+      chips: []
     }
   },
   methods: {
@@ -63,6 +64,9 @@ export default {
     removeTag(item) {
       this.chips.splice(this.chips.indexOf(item), 1)
       this.chips = [...this.chips]
+    },
+    addKeyword(){
+      eventBus.$emit('addKeyword', this.chips)
     }
   }
 }

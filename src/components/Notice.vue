@@ -53,7 +53,6 @@ export default {
 
 <style lang="scss" scoped>
 .list_item {
-  
   .review_title {
     font-weight: 600;
 

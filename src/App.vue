@@ -1,16 +1,19 @@
 <template>
   <v-app>
-    <v-navigation-drawer :mini-variant.sync="mini" v-model="drawer" fixed app>
-      <MainNavbar></MainNavbar>
-    </v-navigation-drawer>
-    <MainHeader @toggleSidebar="toggleSidebar" @toggleSetting="toggleSetting"></MainHeader>
-    <v-content>
-      <router-view></router-view>
-    </v-content>
-    <BottomNav></BottomNav>
-    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-      <SettingDialog @toggleSetting="toggleSetting"></SettingDialog>
-    </v-dialog>
+    <div v-if="isLogined" class="content_wrap">
+      <v-navigation-drawer :mini-variant.sync="mini" v-model="drawer" fixed app>
+        <MainNavbar></MainNavbar>
+      </v-navigation-drawer>
+      <MainHeader @toggleSidebar="toggleSidebar" @toggleSetting="toggleSetting"></MainHeader>
+      <v-content>
+        <router-view></router-view>
+      </v-content>
+      <BottomNav></BottomNav>
+      <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+        <SettingDialog @toggleSetting="toggleSetting"></SettingDialog>
+      </v-dialog>
+    </div>
+    <Login v-else></Login>
   </v-app>
 </template>
 
@@ -19,12 +22,14 @@ import MainNavbar from './components/MainNavbar'
 import MainHeader from './components/MainHeader'
 import BottomNav from './components/BottomNav'
 import SettingDialog from './components/SettingDialog'
+import Login from './components/Login'
 
 export default {
   data: () => ({
     drawer: null,
     mini: true,
-    dialog: false
+    dialog: false,
+    isLogined: true
   }),
   props: {
     source: String
@@ -41,14 +46,21 @@ export default {
     MainNavbar,
     MainHeader,
     BottomNav,
-    SettingDialog
+    SettingDialog,
+    Login
   }
 }
 </script>
 <style lang="scss">
 @import '../static/style/custom.scss';
+
+.content_wrap {
+  height: 100vh;
+}
+
 .content {
   overflow-y: scroll;
+  height: 100%;
   max-height: calc(100vh - 60px);
   
   &::-webkit-scrollbar {

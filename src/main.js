@@ -65,7 +65,9 @@ Vue.use(Vuetify, {
     info: '#2196F3',
     success: '#4CAF50',
     warning: '#FFC107',
-    dankook_blue: '#00529C'
+    dankook_blue: '#00529C',
+    facebook: '#4267B2',
+    google: '#D64937'
   }
 });
 
